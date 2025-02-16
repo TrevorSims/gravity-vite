@@ -11,6 +11,7 @@ const HeroSection = () => {
 
   {/* Hero Content */}
   <div className="relative z-10 max-w-2xl text-center text-white px-4">
+    {/*<img src="/gravitylogo.png" alt="Gravity Logo" className="w-24 h-auto mx-auto mb-4"></img>*/}
     <h1
       className="text-5xl md:text-6xl font-bold mb-4 p-2 inline-block"
       style={{

@@ -23,9 +23,20 @@ const Header = () => {
   </button>
 
   {/* Gravity Text - Right Side */}
+  {/*
   <div className="text-2xl font-semibold ml-auto">
     Gravity
   </div>
+  */}
+
+  {/* Logo - Right Side */}
+  <div className="ml-auto">
+        <img 
+          src="/gravitylogo.png" 
+          alt="Gravity Logo" 
+          className="w-24 h-auto" // Adjust size of logo as needed
+        />
+      </div>
 
   {/* Slide-Out Menu */}
   <div

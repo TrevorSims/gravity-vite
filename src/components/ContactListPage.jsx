@@ -20,7 +20,7 @@ const ContactListPage = () => {
   );
 
   return (
-    <div className="h-screen w-screen bg-customBlue text-white flex flex-col items-center p-4 pt-24">
+    <div className="h-screen w-screen bg-customBlue text-white flex flex-col items-center p-4 pt-32">
       <h1 className="text-4xl font-bold mb-6">Contact List</h1>
 
       {/* Search Input */}
