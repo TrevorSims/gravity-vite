@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+// EventsSection.jsx
+import React, { useState, useEffect } from 'react';
 import useFadeInOnScroll from '../useFadeInOnScroll';
 
-const events = [
+const defaultEvents = [
   {
     id: 1,
     name: "Community Clean-Up",
@@ -29,16 +30,17 @@ const events = [
 ];
 
 const EventsSection = () => {
-  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [events, setEvents] = useState([]);
   const fadeInRef = useFadeInOnScroll();
 
-  const openModal = (event) => {
-    setSelectedEvent(event);
-  };
-
-  const closeModal = () => {
-    setSelectedEvent(null);
-  };
+  useEffect(() => {
+    const storedEvents = localStorage.getItem('events');
+    if (storedEvents) {
+      setEvents(JSON.parse(storedEvents));
+    } else {
+      setEvents(defaultEvents);
+    }
+  }, []);
 
   return (
     <section ref={fadeInRef} id="events" className="py-16 px-4">
@@ -55,39 +57,10 @@ const EventsSection = () => {
               <h3 className="text-xl font-semibold mb-2">{event.name}</h3>
               <p className="text-gray-600 text-sm mb-2">{event.date}</p>
               <p className="text-gray-700 mb-4">{event.description}</p>
-              <button 
-                className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-purple-500 transition duration-200"
-                onClick={() => openModal(event)}
-              >
-                Learn More
-              </button>
             </div>
           </div>
         ))}
       </div>
-
-      {/* Modal */}
-      {selectedEvent && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg max-w-md w-full p-6 relative">
-            <button 
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
-              onClick={closeModal}
-            >
-              &times;
-            </button>
-            <h3 className="text-2xl font-semibold mb-4">{selectedEvent.name}</h3>
-            <p className="text-gray-600 text-sm mb-2">{selectedEvent.date}</p>
-            <p className="text-gray-700 mb-4">{selectedEvent.details}</p>
-            <button 
-              className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-purple-500 transition duration-200"
-              onClick={closeModal}
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
     </section>
   );
 };
