@@ -29,8 +29,19 @@ const Header = ({ isAdmin, setIsAdmin }) => {
       </button>
 
       {/* Gravity Text - Right Side */}
+      {/*
       <div className="text-2xl font-semibold ml-auto">
         Gravity
+      </div>
+      */}
+
+      {/* Logo - Right Side */}
+      <div className="ml-auto">
+        <img 
+          src="/gravitylogo.png" 
+          alt="Gravity Logo" 
+          className="w-24 h-auto"
+        />
       </div>
 
       {/* Slide-Out Menu */}
