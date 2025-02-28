@@ -243,14 +243,14 @@ const ContactListPage = () => {
   };
 
   return (
-    <div className="h-screen w-screen bg-customBlue flex flex-col items-center p-4 pt-24 relative">
+    <div className="h-screen w-screen bg-customBlue flex flex-col items-center p-4 pt-40 relative">
       {/* Reset Button */}
       <button
         onClick={() => {
           setActiveContacts(activeContacts.map(c => ({ ...c, contacted: false })));
           setInactiveContacts(inactiveContacts.map(c => ({ ...c, contacted: false })));
         }}
-        className="absolute left-6 top-20 bg-blue-500 hover:bg-purple-500 text-white p-2 rounded-full shadow-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-300 active:scale-95"
+        className="absolute left-6 top-25 bg-blue-500 hover:bg-purple-500 text-white p-2 rounded-full shadow-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-300 active:scale-95"
       >
         <FiRefreshCcw className="w-5 h-5" />
       </button>

@@ -27,7 +27,7 @@ const CalendarPage = ({ events }) => {
   return (
     <div className="calendar-page min-h-screen w-screen flex flex-col items-center bg-customBlue text-white pt-20">
       <header className="text-center w-full">
-        <h1 className="text-5xl font-bold mb-4">Event Calendar</h1>
+        <h1 className="text-5xl font-bold mb-4 mt-16">Event Calendar</h1>
       </header>
 
       <div className="w-11/12 max-w-4xl mx-auto mt-12">
