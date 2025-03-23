@@ -2,48 +2,19 @@ import React, { useState } from 'react';
 import { FiRefreshCcw, FiTrash } from 'react-icons/fi';
 
 const ContactListPage = () => {
-  // Initial active contacts (contacts to be contacted)
-  const initialActiveContacts = [
-    {
-      id: 1,
-      name: 'John Doe',
-      whoContacts: 'Alice',
-      contacted: false,
-      contactNotes: 'Called last week, no answer.',
-      noResponse: 0,
-      textOrDM: 'Text',
-      generalNotes: 'Interested in donation.',
-      events: 'Fundraiser',
-      phone: '123-456-7890',
-      social: '@johndoe',
-    },
-    {
-      id: 2,
-      name: 'Jane Smith',
-      whoContacts: 'Bob',
-      contacted: false,
-      contactNotes: 'Left a lengthy voicemail about potential projects.',
-      noResponse: 0,
-      textOrDM: 'DM',
-      generalNotes: 'Follow-up in two weeks.',
-      events: 'Volunteer Drive',
-      phone: '987-654-3210',
-      social: '@janesmith',
-    },
-  ];
-
-  // Two separate arrays for active and inactive contacts
-  const [activeContacts, setActiveContacts] = useState(initialActiveContacts);
+  // Both active and inactive contacts start empty.
+  const [activeContacts, setActiveContacts] = useState([]);
   const [inactiveContacts, setInactiveContacts] = useState([]);
 
   // State to determine which table to show: "active" or "inactive"
   const [selectedTable, setSelectedTable] = useState('active');
   const currentContacts = selectedTable === 'active' ? activeContacts : inactiveContacts;
 
-  // Common states for filtering and Who Contacts list
+  // Common states for filtering and Who Contacts list (no default contactors)
   const [search, setSearch] = useState('');
   const [selectedWhoContacts, setSelectedWhoContacts] = useState('All');
-  const [whoContactsList, setWhoContactsList] = useState(['Alice', 'Bob']);
+  const [selectedTextOrDM, setSelectedTextOrDM] = useState('All');
+  const [whoContactsList, setWhoContactsList] = useState([]); // No default contactors
   const whoContactsFilterOptions = ['All', ...whoContactsList];
 
   // State for the Add/Edit Contact modals
@@ -63,8 +34,6 @@ const ContactListPage = () => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [showWhoContactModal, setShowWhoContactModal] = useState(false);
   const [contactToDelete, setContactToDelete] = useState(null);
-
-  // NEW: State for move confirmation modal
   const [contactToMove, setContactToMove] = useState(null);
   const [showMoveModal, setShowMoveModal] = useState(false);
 
@@ -96,6 +65,8 @@ const ContactListPage = () => {
   const handleSearchChange = (e) => setSearch(e.target.value);
   const handleWhoContactsFilterChange = (e) =>
     setSelectedWhoContacts(e.target.value);
+  const handleTextOrDMFilterChange = (e) =>
+    setSelectedTextOrDM(e.target.value);
 
   const filteredContacts = currentContacts.filter((contact) => {
     const matchesSearch =
@@ -104,51 +75,65 @@ const ContactListPage = () => {
       contact.social.toLowerCase().includes(search.toLowerCase());
     const matchesWho =
       selectedWhoContacts === 'All' || contact.whoContacts === selectedWhoContacts;
-    return matchesSearch && matchesWho;
+    const matchesTextOrDM =
+      selectedTextOrDM === 'All' || contact.textOrDM === selectedTextOrDM;
+    return matchesSearch && matchesWho && matchesTextOrDM;
   });
 
   // --- Table actions for currentContacts ---
   const handleCheckboxChange = (id) => {
     if (selectedTable === 'active') {
-      setActiveContacts(activeContacts.map(contact =>
-        contact.id === id ? { ...contact, contacted: !contact.contacted } : contact
-      ));
+      setActiveContacts(
+        activeContacts.map(contact =>
+          contact.id === id ? { ...contact, contacted: !contact.contacted } : contact
+        )
+      );
     } else {
-      setInactiveContacts(inactiveContacts.map(contact =>
-        contact.id === id ? { ...contact, contacted: !contact.contacted } : contact
-      ));
+      setInactiveContacts(
+        inactiveContacts.map(contact =>
+          contact.id === id ? { ...contact, contacted: !contact.contacted } : contact
+        )
+      );
     }
   };
 
   const handleIncrement = (id) => {
     if (selectedTable === 'active') {
-      setActiveContacts(activeContacts.map(contact =>
-        contact.id === id && contact.noResponse < 3
-          ? { ...contact, noResponse: contact.noResponse + 1 }
-          : contact
-      ));
+      setActiveContacts(
+        activeContacts.map(contact =>
+          contact.id === id && contact.noResponse < 3
+            ? { ...contact, noResponse: contact.noResponse + 1 }
+            : contact
+        )
+      );
     } else {
-      setInactiveContacts(inactiveContacts.map(contact =>
-        contact.id === id && contact.noResponse < 3
-          ? { ...contact, noResponse: contact.noResponse + 1 }
-          : contact
-      ));
+      setInactiveContacts(
+        inactiveContacts.map(contact =>
+          contact.id === id && contact.noResponse < 3
+            ? { ...contact, noResponse: contact.noResponse + 1 }
+            : contact
+        )
+      );
     }
   };
 
   const handleDecrement = (id) => {
     if (selectedTable === 'active') {
-      setActiveContacts(activeContacts.map(contact =>
-        contact.id === id && contact.noResponse > 0
-          ? { ...contact, noResponse: contact.noResponse - 1 }
-          : contact
-      ));
+      setActiveContacts(
+        activeContacts.map(contact =>
+          contact.id === id && contact.noResponse > 0
+            ? { ...contact, noResponse: contact.noResponse - 1 }
+            : contact
+        )
+      );
     } else {
-      setInactiveContacts(inactiveContacts.map(contact =>
-        contact.id === id && contact.noResponse > 0
-          ? { ...contact, noResponse: contact.noResponse - 1 }
-          : contact
-      ));
+      setInactiveContacts(
+        inactiveContacts.map(contact =>
+          contact.id === id && contact.noResponse > 0
+            ? { ...contact, noResponse: contact.noResponse - 1 }
+            : contact
+        )
+      );
     }
   };
 
@@ -168,11 +153,9 @@ const ContactListPage = () => {
 
   const handleMoveContact = () => {
     if (selectedTable === 'active') {
-      // Move from active to inactive
       setActiveContacts(activeContacts.filter(c => c.id !== contactToMove.id));
       setInactiveContacts([...inactiveContacts, contactToMove]);
     } else {
-      // Move from inactive to active
       setInactiveContacts(inactiveContacts.filter(c => c.id !== contactToMove.id));
       setActiveContacts([...activeContacts, contactToMove]);
     }
@@ -184,6 +167,7 @@ const ContactListPage = () => {
   const handleNewContactChange = (e) => {
     setNewContact({ ...newContact, [e.target.name]: e.target.value });
   };
+
   const handleAddContact = (e) => {
     e.preventDefault();
     const newId =
@@ -210,16 +194,21 @@ const ContactListPage = () => {
   const handleEditContactChange = (e) => {
     setEditContact({ ...editContact, [e.target.name]: e.target.value });
   };
+
   const handleUpdateContact = (e) => {
     e.preventDefault();
     if (editContact.sourceTable === 'active') {
-      setActiveContacts(activeContacts.map(contact =>
-        contact.id === editContact.id ? editContact : contact
-      ));
+      setActiveContacts(
+        activeContacts.map(contact =>
+          contact.id === editContact.id ? editContact : contact
+        )
+      );
     } else {
-      setInactiveContacts(inactiveContacts.map(contact =>
-        contact.id === editContact.id ? editContact : contact
-      ));
+      setInactiveContacts(
+        inactiveContacts.map(contact =>
+          contact.id === editContact.id ? editContact : contact
+        )
+      );
     }
     setEditContact(null);
   };
@@ -237,6 +226,7 @@ const ContactListPage = () => {
     }
     setNewWhoContact('');
   };
+
   const handleDeleteWhoContact = (name) => {
     setWhoContactsList(whoContactsList.filter(n => n !== name));
   };
@@ -267,7 +257,7 @@ const ContactListPage = () => {
 
       <h1 className="text-4xl font-bold mb-6 text-white">Contact List</h1>
 
-      {/* Table Switch Dropdown & Who Contacts Filter */}
+      {/* Table Switch Dropdown & Filters */}
       <div className="w-full max-w-6xl flex items-center justify-between mb-4">
         <div className="flex items-center space-x-4">
           <label className="text-white">View Table:</label>
@@ -299,6 +289,15 @@ const ContactListPage = () => {
               </option>
             ))}
           </select>
+          <select
+            value={selectedTextOrDM}
+            onChange={handleTextOrDMFilterChange}
+            className="p-2 border rounded shadow text-black bg-white"
+          >
+            <option value="All">All</option>
+            <option value="Text">Text</option>
+            <option value="DM">DM</option>
+          </select>
           <button
             onClick={() => setShowWhoContactModal(true)}
             className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded"
@@ -308,7 +307,7 @@ const ContactListPage = () => {
         </div>
       </div>
 
-      {/* Button to open the Add New Contact modal */}
+      {/* Add New Contact Button */}
       <button
         onClick={() => setShowAddModal(true)}
         className="mb-4 bg-green-500 hover:bg-green-600 text-white p-2 rounded"

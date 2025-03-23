@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+// App.jsx
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import HeroSection from './components/HeroSection';
@@ -8,28 +9,42 @@ import Footer from './components/Footer';
 import CalendarPage from './components/CalendarPage';
 import ContactListPage from './components/ContactListPage';
 import StaffLogin from './components/StaffLogin';
+import ManageEventsPage from './components/ManageEventsPage';
 
 const App = () => {
-  const [isAdmin, setIsAdmin] = useState(false); // Track staff login state
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  // Initialize events state from localStorage or empty array.
+  const [events, setEvents] = useState(() => {
+    const storedEvents = localStorage.getItem('events');
+    return storedEvents ? JSON.parse(storedEvents) : [];
+  });
+
+  // Save events to localStorage whenever they change.
+  useEffect(() => {
+    localStorage.setItem('events', JSON.stringify(events));
+  }, [events]);
 
   return (
     <Router>
       <div>
         <Header isAdmin={isAdmin} setIsAdmin={setIsAdmin} />
         <Routes>
-          <Route path="/" element={
-            <>
-              <HeroSection />
-              <EventsSection />
-              <DonateSection />
-              <Footer />
-            </>
-          } />
-          <Route path="/calendar" element={<CalendarPage />} />
-          {/* Staff login page */}
+          <Route
+            path="/"
+            element={
+              <>
+                <HeroSection />
+                <EventsSection events={events} />
+                <DonateSection />
+                <Footer />
+              </>
+            }
+          />
+          <Route path="/calendar" element={<CalendarPage events={events} />} />
           <Route path="/staff-login" element={<StaffLogin setIsAdmin={setIsAdmin} />} />
-          {/* Contact list only visible to staff */}
           {isAdmin && <Route path="/contacts" element={<ContactListPage />} />}
+          {isAdmin && <Route path="/manage-events" element={<ManageEventsPage events={events} setEvents={setEvents} />} />}
         </Routes>
       </div>
     </Router>

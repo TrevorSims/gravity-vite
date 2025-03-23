@@ -40,7 +40,7 @@ const Header = ({ isAdmin, setIsAdmin }) => {
         <img 
           src="/gravitylogo.png" 
           alt="Gravity Logo" 
-          className="w-24 h-auto" // Adjust size of logo as needed
+          className="w-24 h-auto"
         />
       </div>
 
@@ -62,6 +62,12 @@ const Header = ({ isAdmin, setIsAdmin }) => {
               Contact List
             </Link>
           )}
+          {isAdmin && (
+            <Link to="/manage-events" className="hover:text-gray-300" onClick={toggleMenu}>
+              Manage Events
+            </Link>
+          )}
+
           {/* Styled Log Out Button */}
           {isAdmin && (
             <button
