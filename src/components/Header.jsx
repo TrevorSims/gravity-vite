@@ -38,7 +38,7 @@ const Header = ({ isAdmin, setIsAdmin }) => {
       {/* Logo - Right Side */}
       <div className="ml-auto">
         <img 
-          src="/gravitylogo.png" 
+          src="/gravitylogo2.png" 
           alt="Gravity Logo" 
           className="w-24 h-auto"
         />
