@@ -1,4 +1,3 @@
-// App.jsx
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
@@ -10,6 +9,7 @@ import CalendarPage from './components/CalendarPage';
 import ContactListPage from './components/ContactListPage';
 import StaffLogin from './components/StaffLogin';
 import ManageEventsPage from './components/ManageEventsPage';
+import DonatePage from './components/DonatePage';
 
 const App = () => {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -41,6 +41,7 @@ const App = () => {
               </>
             }
           />
+          <Route path="/donate" element={<DonatePage />} />
           <Route path="/calendar" element={<CalendarPage events={events} />} />
           <Route path="/staff-login" element={<StaffLogin setIsAdmin={setIsAdmin} />} />
           {isAdmin && <Route path="/contacts" element={<ContactListPage />} />}

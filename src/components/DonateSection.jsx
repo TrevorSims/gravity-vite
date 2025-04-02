@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import useFadeInOnScroll from '../useFadeInOnScroll';
 
 const DonateSection = () => {
@@ -15,9 +16,11 @@ const DonateSection = () => {
         <p className="text-gray-600 mb-6">
           Your contributions help us make a lasting impact in the community. Every little bit counts.
         </p>
-        <button className="px-6 py-2 bg-blue-500 text-white font-semibold rounded-full shadow-md hover:bg-blue-600 transition duration-200">
-          Donate
-        </button>
+        <Link to="/donate">
+          <button className="px-6 py-2 bg-blue-500 text-white font-semibold rounded-full shadow-md hover:bg-blue-600 transition duration-200">
+            Donate
+          </button>
+        </Link>
       </div>
     </section>
   );
