@@ -5,13 +5,12 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDh4J5ivqMvY6jn1pFqeFV7coekqAanO-I",
-  authDomain: "gravitydenton.firebaseapp.com",
-  databaseURL: "https://gravitydenton-default-rtdb.firebaseio.com",
-  projectId: "gravitydenton",
-  storageBucket: "gravitydenton.firebasestorage.app",
-  messagingSenderId: "620059299581",
-  appId: "1:620059299581:web:812609f110ef78bb85f894"
+  apiKey: "AIzaSyAPeuZRLZMhM97u7pp5YFLK72I9C26xgtI",
+  authDomain: "gravitywebapp-ea5c0.firebaseapp.com",
+  projectId: "gravitywebapp-ea5c0",
+  storageBucket: "gravitywebapp-ea5c0.firebasestorage.app",
+  messagingSenderId: "84069356895",
+  appId: "1:84069356895:web:0af4be66230ecae7ac12ea"
 };
 
 // Initialize Firebase
