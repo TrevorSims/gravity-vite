@@ -28,13 +28,6 @@ const Header = ({ isAdmin, setIsAdmin }) => {
         </div>
       </button>
 
-      {/* Gravity Text - Right Side */}
-      {/*
-      <div className="text-2xl font-semibold ml-auto">
-        Gravity
-      </div>
-      */}
-
       {/* Logo - Right Side */}
       <div className="ml-auto">
         <img 
@@ -57,6 +50,9 @@ const Header = ({ isAdmin, setIsAdmin }) => {
           <Link to="/calendar" className="hover:text-gray-300" onClick={toggleMenu}>
             Calendar
           </Link>
+          <Link to="/donate" className="hover:text-gray-300" onClick={toggleMenu}>
+            Donate
+          </Link>
           {isAdmin && (
             <Link to="/contacts" className="hover:text-gray-300" onClick={toggleMenu}>
               Contact List
@@ -67,8 +63,6 @@ const Header = ({ isAdmin, setIsAdmin }) => {
               Manage Events
             </Link>
           )}
-
-          {/* Styled Log Out Button */}
           {isAdmin && (
             <button
               onClick={handleLogout}

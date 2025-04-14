@@ -9,7 +9,7 @@ import CalendarPage from './components/CalendarPage';
 import ContactListPage from './components/ContactListPage';
 import StaffLogin from './components/StaffLogin';
 import ManageEventsPage from './components/ManageEventsPage';
-import DonatePage from './components/DonatePage';
+import TabbedDonatePage from './components/TabbedDonatePage';
 
 const App = () => {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -41,11 +41,17 @@ const App = () => {
               </>
             }
           />
-          <Route path="/donate" element={<DonatePage />} />
+          {/* Updated donation route that passes isAdmin so admins can edit the list */}
+          <Route path="/donate" element={<TabbedDonatePage isAdmin={isAdmin} />} />
           <Route path="/calendar" element={<CalendarPage events={events} />} />
           <Route path="/staff-login" element={<StaffLogin setIsAdmin={setIsAdmin} />} />
           {isAdmin && <Route path="/contacts" element={<ContactListPage />} />}
-          {isAdmin && <Route path="/manage-events" element={<ManageEventsPage events={events} setEvents={setEvents} />} />}
+          {isAdmin && (
+            <Route
+              path="/manage-events"
+              element={<ManageEventsPage events={events} setEvents={setEvents} />}
+            />
+          )}
         </Routes>
       </div>
     </Router>
